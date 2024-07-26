@@ -1,0 +1,8 @@
+- "!include dbo_CARDLINK.yaml"
+- "!include dbo_CPAHF.yaml"
+- "!include dbo_CPCRA.yaml"
+- "!include dbo_CPCRD.yaml"
+- "!include dbo_CPCUS.yaml"
+- "!include dbo_CPOLPT_HEADER.yaml"
+- "!include dbo_CPOLST_TRX.yaml"
+- "!include dbo_EPTRANS.yaml"

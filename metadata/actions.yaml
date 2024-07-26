@@ -1,0 +1,379 @@
+actions:
+  - name: inquiryAccountHistory
+    definition:
+      kind: ""
+      handler: '{{HASURA_ACTION_INQUIRY_ACCOUNT_HISTORY_WEBHOOK}}'
+      headers:
+        - name: X-CHANNEL-ID
+          value_from_env: HASURA_ACTION_INQUIRY_ACCOUNT_HISTORY_HEADER_X_CHANNEL_ID
+        - name: X-API-KEY
+          value_from_env: HASURA_ACTION_INQUIRY_ACCOUNT_HISTORY_HEADER_X_API_KEY
+        - name: X-REFF-ID
+          value: 12345678ASDFG
+      request_transform:
+        body:
+          action: transform
+          template: '{{$body.input.request}}'
+        method: GET
+        query_params: ""
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        url: '{{$base_url}}/v3/account-history/{{$body.input.request.acctNo}}'
+        version: 2
+  - name: inquiryBrimolaPangkalan
+    definition:
+      kind: ""
+      handler: '{{HASURA_ACTION_INQUIRY_BRIMOLA_PANGKALAN_WEBHOOK}}'
+      forward_client_headers: true
+      headers:
+        - name: AppRequestId
+          value: tester_chm_b00021
+        - name: AppKey
+          value_from_env: HASURA_ACTION_INQUIRY_BRIMOLA_PANGKALAN_APP_KEY
+      request_transform:
+        body:
+          action: transform
+          template: '{{$body.input.keagenanInput}}'
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: '{{$body}}'
+        template_engine: Kriti
+        version: 2
+    comment: Hit API getIdKeagenan dari BRIMOLA
+  - name: inquiryBrimolaTransaction
+    definition:
+      kind: ""
+      handler: '{{HASURA_ACTION_INQUIRY_BRIMOLA_TRANSACTION_WEBHOOK}}'
+      forward_client_headers: true
+      headers:
+        - name: AppRequestId
+          value: tester_chm_c00014
+        - name: AppKey
+          value_from_env: HASURA_ACTION_INQUIRY_BRIMOLA_TRANSACTION_APP_KEY
+      request_transform:
+        body:
+          action: transform
+          template: '{{$body.input.agenInputTrx}}'
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: '{{$body}}'
+        template_engine: Kriti
+        version: 2
+  - name: inquiryCardData
+    definition:
+      kind: ""
+      handler: '{{HASURA_ACTION_INQUIRY_CARD_DATA_WEBHOOK}}'
+      headers:
+        - name: X-CHANNEL-ID
+          value_from_env: HASURA_ACTION_INQUIRY_CARD_DATA_HEADER_X_CHANNEL_ID
+        - name: X-API-KEY
+          value_from_env: HASURA_ACTION_INQUIRY_CARD_DATA_HEADER_X_API_KEY
+        - name: X-REFF-ID
+          value: 12345678ASDFG
+      request_transform:
+        body:
+          action: transform
+          template: '{{$body.input.request}}'
+        method: GET
+        query_params: ""
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        url: '{{$base_url}}/v3/card/{{$body.input.request.cardNo}}'
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: |-
+            {{ if $body.status == "200" }}
+            {
+              "status": {{$body.status}},
+              "responseCode": {{$body.responseCode}},
+              "responseDesc": {{$body.responseDesc}},
+              "data": {
+                "cardNo": {{$body.responseData.cardNo}},
+                "branchCode": {{$body.responseData.branchCode}},
+                "typeCode": {{$body.responseData.typeCode}},
+                "cardStatus": {{$body.responseData.cardStatus}},
+                "name": {{$body.responseData.name}},
+                "address1": {{$body.responseData.address1}},
+                "address2": {{$body.responseData.address2}},
+                "city": {{$body.responseData.city}},
+                "province": {{$body.responseData.province}},
+                "postalCode": {{$body.responseData.postalCode}},
+                "countryCode": {{$body.responseData.countryCode}},
+                "phoneNo": {{$body.responseData.phoneNo}},
+                "motherName": {{$body.responseData.motherName}},
+                "employer": {{$body.responseData.employer}},
+                "idType": {{$body.responseData.idType}},
+                "idNumber": {{$body.responseData.idNumber}},
+                "gender": {{$body.responseData.gender}},
+                "maritalStatus": {{$body.responseData.maritalStatus}},
+                "birthDate": {{$body.responseData.birthDate}},
+                "accNo": {{$body.responseData.accNo}},
+                "expDate": {{$body.responseData.expDate}},
+                "mbNo": {{$body.responseData.mbNo}},
+                "mbStatus": {{$body.responseData.mbStatus}},
+                "cardType": {{$body.responseData.cardType}},
+                "type": {{$body.responseData.type}},
+                "issueDate": {{$body.responseData.issueDate}},
+                "activeDate": {{$body.responseData.activeDate}},
+                "lastMaint": {{$body.responseData.lastMaint}},
+                "userMaint": {{$body.responseData.userMaint}},
+                "blockDate": {{$body.responseData.blockDate}},
+                "userBlock": {{$body.responseData.userBlock}},
+                "statusDesc": {{$body.responseData.statusDesc}}
+              }
+            }
+            {{ else }}
+            {
+              "message": {{$body.responseDesc}},
+              "extensions": {
+                "code": {{$body.status}}
+              }
+            }
+            {{ end }}
+        template_engine: Kriti
+        version: 2
+    comment: inquiryCardData
+  - name: inquiryHoldStatus
+    definition:
+      kind: ""
+      handler: '{{HASURA_ACTION_INQUIRY_HOLD_STATUS_WEBHOOK}}'
+      headers:
+        - name: Authorization
+          value_from_env: HASURA_ACTION_INQUIRY_HOLD_STATUS_AUTHORIZATION
+      request_transform:
+        body:
+          action: transform
+          template: '{{$body.input}}'
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        url: '{{$base_url}}/getholdstatus'
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: "{{ if ($response.status == 200) && ($body.response.responseCode == \"00\") }}\n{\n    \"errorCode\": {{$body.response.errorCode}}, \n    \"responseCode\": {{$body.response.responseCode}}, \n    \"responseMessage\": {{$body.response.responseMessage}}, \n    \"acctNo\": {{$body.response.acctNo}}, \n    \"acctType\": {{$body.response.acctType}}, \n    \"holdSeq\": {{$body.response.holdSeq}}, \n    \"holdType\": {{$body.response.holdType}}, \n    \"holdAmt\": {{$body.response.holdAmt}}, \n    \"holdRemark\": {{$body.response.holdRemark}}, \n    \"expdate\": {{$body.response.expdate}}, \n    \"holdDate\": {{$body.response.holdDate}}, \n    \"recordId\": {{$body.response.recordId}}\n}\n{{elif $response.status == 200 }}\n{\n    \"errorCode\": {{$body.response.errorCode}}, \n    \"responseCode\": {{$body.response.responseCode}}, \n    \"responseMessage\": {{$body.response.responseMessage}}\n}\n{{else}}\n{\n  \"message\":{{$body.response.responseMessage}}\n}\n{{ end }}"
+        template_engine: Kriti
+        version: 2
+    comment: inquiryHoldStatus
+  - name: inquiryIbbiz_byAccount
+    definition:
+      kind: ""
+      handler: http://gryphon-ibbiz.apps.ocp-new-dev.bri.co.id/api/v1/client/find/by-account
+      request_transform:
+        body:
+          action: transform
+          template: '{"accNumber":{{$body.input.Req.accNumber}}}'
+        method: POST
+        query_params:
+          allStatus: "true"
+        template_engine: Kriti
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: |-
+            {{ if $response.status == 200 }}
+              {
+                "rc": {{$body.rc}},
+                "desc": {{$body.desc}},
+                "msg": {{$body.msg}},
+                "data": {
+                    "id": {{$body.data.id}},
+                    "handle": {{$body.data.handle}},
+                    "alias": {{$body.data.alias}},
+                    "field": {{$body.data.field}},
+                    "logo": {{$body.data.logo}},
+                    "type": {{$body.data.type}},
+                    "entity": {{$body.data.entity}},
+                    "address": {{$body.data.address}},
+                    "name": {{$body.data.name}},
+                    "createdAt": {{$body.data.createdAt}},
+                    "updatedAt": {{$body.data.updatedAt}},
+                    "cif": {{$body.data.cif}},
+                    "refnum": {{$body.data.refnum}},
+                    "cardNumber": {{$body.data.cardNumber}},
+                    "accNumber": {{$body.data.accNumber}},
+                    "softToken": {{$body.data.softToken}},
+                    "branchCode": {{$body.data.branchCode}},
+                    "branchChecker": {{$body.data.branchChecker}},
+                    "branchSigner": {{$body.data.branchSigner}},
+                    "referralCode": {{$body.data.referralCode}},
+                    "clientType": {{$body.data.clientType}},
+                    "clientSigner": {{$body.data.clientSigner}},
+                    "checkerTotal": {{$body.data.checkerTotal}},
+                    "signerTotal": {{$body.data.signerTotal}},
+                    "status": {{$body.data.status}},
+                    "description": {{$body.data.description}},
+                    "regExpiryDate": {{$body.data.regExpiryDate}},
+                    "channel": {{$body.data.channel}}
+                }
+            }
+            {{ elif $response.status == 400 }}
+              {
+                "message": "test",
+                "extensions": {
+                    "rc": {{$body.rc}},
+                    "desc": {{$body.desc}},
+                    "msg": {{$body.msg}},
+                    "data": {{$body.data}}
+                }
+            }
+            {{ elif $response.status == 404 }}
+            {
+                "message": "test",
+                "extensions": {
+                    "rc": {{$body.rc}},
+                    "desc": {{$body.desc}},
+                    "msg": {{$body.msg}},
+                    "data": {{$body.data}}
+                }
+            }
+            {{ else }}
+              {
+                "message": "error http"
+            }
+            {{ end }}
+        template_engine: Kriti
+        version: 2
+    comment: inquiryIbbiz-byAccount
+  - name: inquiryIbbiz_byUser
+    definition:
+      kind: ""
+      handler: http://gryphon-ibbiz.apps.ocp-new-dev.bri.co.id/api/v1/client
+      request_transform:
+        body:
+          action: remove
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        url: '{{$base_url}}/{{$body.input.Req.id}}/users'
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: |-
+            {{ if $response.status == 200 }}
+              {
+                "rc": {{$body.rc}},
+                "desc": {{$body.desc}},
+                "msg": {{$body.msg}},
+                "data": [{{$body}}]
+            }
+            {{ elif $response.status == 400 }}
+              {
+                "message": "test",
+                "extensions": {
+                    "rc": {{$body.rc}},
+                    "desc": {{$body.desc}},
+                    "msg": {{$body.msg}},
+                    "data": {{$body.data}}
+                }
+            }
+            {{ elif $response.status == 404 }}
+            {
+                "message": "test",
+                "extensions": {
+                    "rc": {{$body.rc}},
+                    "desc": {{$body.desc}},
+                    "msg": {{$body.msg}},
+                    "data": {{$body.data}}
+                }
+            }
+            {{ else }}
+              {
+                "message": "error http"
+            }
+            {{ end }}
+        template_engine: Kriti
+        version: 2
+    comment: inquiryIbbiz_byUser
+custom_types:
+  enums: []
+  input_objects:
+    - name: InputParams
+    - name: InputParam
+    - name: ParamScore
+    - name: ParamCard
+    - name: ParamPrescreening
+    - name: ParamIbbiz1
+    - name: ParamIbbiz2
+    - name: ApiV2CustomerProfileProfileInput
+    - name: ProfileInput
+    - name: Header
+    - name: SampleInput
+    - name: RequestWrapper
+    - name: RequestContext
+    - name: RequestInputContext
+    - name: RequestCardData
+    - name: RequestAccountHistory
+    - name: ParamIdAgen
+    - name: InquiryHoldStatusRequestWrapper
+    - name: InquiryHoldStatusRequest
+    - name: ParamIdPangkalan
+    - name: paramAgenTrxInput
+    - name: RequestCardlinkByPhoneNumber
+  objects:
+    - name: MyQueryOutput
+    - name: Response
+    - name: Data
+    - name: ResponseScore
+    - name: FindScore
+    - name: ResponsePrescreening
+    - name: Prescreening
+    - name: ResponseIbbiz1
+    - name: DataIbbiz1
+    - name: ResponseIbbiz2
+    - name: DataIbbiz2
+    - name: ResponseUserBccm
+    - name: StandardResponse
+    - name: Cardlink
+    - name: CustomerProfileAdaptiveChannelData
+    - name: Demografi
+    - name: InvestasiPortofolio
+    - name: Pinjaman
+    - name: PortofolioPerbankan
+    - name: CustomerProfileAdaptiveChannelOutput
+    - name: Simpanan
+    - name: ResponseWrapper
+    - name: ResponseContext
+    - name: ResponseCardData
+    - name: ResponseDataWrapper
+    - name: ResponseCardDataWrapper
+    - name: ResponseAccountHistory
+    - name: ResponseAccountHistoryDataWrapper
+    - name: DataAgenBrimola
+    - name: DataAgen
+    - name: ResponseAgenBrimola
+    - name: ResponseAccountHistoryData
+    - name: InquiryHoldStatusResponseWrapper
+    - name: InquiryHoldStatusResponse
+    - name: ResponseAgenPangkalan
+    - name: DataPangkalan
+    - name: ResponseAgenBrimolaTrx
+    - name: DataTrxBrimola
+    - name: Cpcus
+    - name: ResponseCustomerData
+  scalars: []

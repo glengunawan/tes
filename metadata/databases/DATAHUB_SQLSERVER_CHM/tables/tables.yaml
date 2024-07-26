@@ -1,0 +1,5 @@
+- "!include dbo_BRILINK_PROFILE.yaml"
+- "!include dbo_MACHINE_DATA.yaml"
+- "!include dbo_MERCHANT_PROFILE.yaml"
+- "!include dbo_SI_DPLK.yaml"
+- "!include dbo_TRX_DPLK.yaml"

@@ -1,0 +1,20 @@
+status: enabled
+data_types:
+  - traces
+  - metrics
+  - logs
+exporter_otlp:
+  headers: []
+  otlp_logs_endpoint: '{{HASURA_OTEL_LOGS_ENDPOINT}}'
+  otlp_metrics_endpoint: '{{HASURA_OTEL_METRICS_ENDPOINT}}'
+  otlp_traces_endpoint: '{{HASURA_OTEL_TRACES_ENDPOINT}}'
+  protocol: http/protobuf
+  resource_attributes:
+    - name: service.name
+      value: datahub-hasura-chm
+    - name: deployment.environment
+      value: '{{HASURA_DEPLOYMENT_ENVIRONMENT}}'
+  traces_propagators:
+    - tracecontext
+batch_span_processor:
+  max_export_batch_size: 509

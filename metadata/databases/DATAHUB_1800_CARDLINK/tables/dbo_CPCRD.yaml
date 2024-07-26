@@ -1,0 +1,13 @@
+table:
+  name: CPCRD
+  schema: dbo
+object_relationships:
+  - name: JOIN
+    using:
+      manual_configuration:
+        column_mapping:
+          CM_CUSTOMER_NMBR: CR_ACCT_NBR
+        insertion_order: null
+        remote_table:
+          name: CPCUS
+          schema: dbo

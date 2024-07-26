@@ -1,0 +1,627 @@
+type Query {
+  inquiryAccountHistory(
+    request: RequestAccountHistory!
+  ): ResponseAccountHistory
+}
+
+type Query {
+  inquiryBrimolaPangkalan(
+    keagenanInput: ParamIdPangkalan!
+  ): ResponseAgenPangkalan
+}
+
+type Query {
+  inquiryBrimolaTransaction(
+    agenInputTrx: paramAgenTrxInput!
+  ): ResponseAgenBrimolaTrx
+}
+
+type Query {
+  inquiryCardData(
+    request: RequestCardData!
+  ): ResponseCardData
+}
+
+type Query {
+  inquiryHoldStatus(
+    request: InquiryHoldStatusRequest!
+  ): InquiryHoldStatusResponse
+}
+
+type Query {
+  inquiryIbbiz_byAccount(
+    Req: ParamIbbiz1!
+  ): ResponseIbbiz1
+}
+
+type Query {
+  inquiryIbbiz_byUser(
+    Req: ParamIbbiz2!
+  ): ResponseIbbiz2
+}
+
+input InputParams {
+  nik: String!
+}
+
+input InputParam {
+  nik: String!
+}
+
+input ParamScore {
+  nik: String!
+}
+
+input ParamCard {
+  cardNo: String!
+}
+
+input ParamPrescreening {
+  nik: String!
+}
+
+input ParamIbbiz1 {
+  accNumber: String!
+}
+
+input ParamIbbiz2 {
+  id: Int!
+}
+
+input ApiV2CustomerProfileProfileInput {
+  cifno: String
+}
+
+input ProfileInput {
+  idType: String
+  idValue: String
+  cardNo: String
+  acctNo: String
+}
+
+input Header {
+  xDatahubChannel: String
+  xDatahubFeature: String
+  xDatahubPersonalNumber: String
+}
+
+input SampleInput {
+  password: String
+  username: String
+}
+
+input RequestWrapper {
+  channel: String!
+  product: String!
+  threshold: String!
+  thresholdType: String!
+  input: RequestInputContext!
+}
+
+input RequestContext {
+  acctNo: String!
+  holdSeq: String!
+  externalId: String!
+  channelId: String!
+  serviceId: String
+  tellerId: String
+}
+
+input RequestInputContext {
+  nik: String!
+  noKk: String!
+  namaLengkap: String!
+  jenisKelamin: String!
+  tempatLahir: String!
+  tanggalLahir: String!
+  statusHubunganKeluarga: String!
+  statusKawin: String!
+  pendidikanAkhir: String!
+}
+
+input RequestCardData {
+  cardNo: String!
+}
+
+input RequestAccountHistory {
+  acctNo: String!
+}
+
+input ParamIdAgen {
+  agenId: String!
+}
+
+input InquiryHoldStatusRequestWrapper {
+  request: InquiryHoldStatusRequest
+}
+
+input InquiryHoldStatusRequest {
+  acctNo: String
+  holdSeq: String
+  externalId: String
+  channelId: String
+  serviceId: String
+  tellerId: String
+}
+
+input ParamIdPangkalan {
+  pangkalanId: String!
+}
+
+input paramAgenTrxInput {
+  pangkalanId: String!
+  agenId: String!
+  startDate: String!
+  endDate: String!
+}
+
+input RequestCardlinkByPhoneNumber {
+  cardNo: String
+}
+
+type MyQueryOutput {
+  customer_id: Int!
+  customer_name: String
+  email: String
+}
+
+type Response {
+  status: Int!
+  responseCode: String!
+  responseDesc: String!
+  responseData: Data
+}
+
+type Data {
+  cardNo: String
+  branchCode: String
+  typeCode: String
+  cardStatus: String
+  name: String
+  address1: String
+  address2: String
+  city: String
+  province: String
+  postalCode: String
+  countryCode: String
+  phoneNo: String
+  motherName: String
+  employer: String
+  idType: String
+  idNumber: String
+  gender: String
+  maritalStatus: String
+  birthDate: String
+  accNo: String
+  expDate: String
+  mbNo: String
+  mbStatus: String
+  cardType: String
+  type: String
+}
+
+type ResponseScore {
+  statusCode: Int!
+  errorCode: Int!
+  resposneCode: String!
+  responseMessage: String!
+  errors: [String]
+  data: FindScore
+}
+
+type FindScore {
+  isPnm: String
+}
+
+type ResponsePrescreening {
+  statusCode: Int!
+  errorCode: Int!
+  resposneCode: String!
+  responseMessage: String!
+  errors: [String]
+  data: Prescreening
+}
+
+type Prescreening {
+  noKtp: String
+  scoreDebitur: String
+}
+
+type ResponseIbbiz1 {
+  rc: Int!
+  desc: String!
+  msg: String!
+  data: DataIbbiz1
+}
+
+type DataIbbiz1 {
+  id: Int
+  handle: String
+  alias: String
+  field: String
+  logo: String
+  type: String
+  entity: Int
+  address: String
+  name: String
+  createdAt: String
+  updatedAt: String
+  cif: String
+  refnum: String
+  cardNumber: String
+  accNumber: String
+  softToken: String
+  branchCode: String
+  branchChecker: String
+  branchSigner: String
+  referralCode: String
+  clientType: Int
+  clientSigner: Int
+  checkerTotal: Int
+  signerTotal: Int
+  status: Int
+  description: String
+  regExpiryDate: String
+  channel: String
+}
+
+type ResponseIbbiz2 {
+  rc: Int!
+  desc: String!
+  msg: String!
+  data: [DataIbbiz2]
+}
+
+type DataIbbiz2 {
+  id: Int
+  handle: String
+  alias: String
+  name: String
+  email: String
+  handphone: String
+  idType: Int
+  idNumber: String
+  address: String
+  userType: Int
+  lastLogin: String
+  lastLogout: String
+  login: Int
+  status: Int
+}
+
+type ResponseUserBccm {
+  cardNumber: String!
+}
+
+type StandardResponse {
+  statusCode: Int!
+  errorCode: Int!
+  responseCode: String!
+  responseMessage: String!
+  errors: [String]
+}
+
+type Cardlink {
+  cardNumber: String
+  cifno: String
+  product: String
+  productDescription: String
+  productType: String
+}
+
+type CustomerProfileAdaptiveChannelData {
+  cifno: String
+  demografi: Demografi
+  portofolioPerbankan: PortofolioPerbankan
+}
+
+type Demografi {
+  alamatDomisili: String
+  alamatDomisili2: String
+  alamatKantor: String
+  alamatKantor2: String
+  alamatSesuaiID: String
+  alamatSesuaiID2: String
+  alamatSuratMenyurat: String
+  bidangPekerjaan: String
+  email: String
+  gelarSebelumNama: String
+  gelarSetelahNama: String
+  handphone: String
+  jenisIdentitas: String
+  jenisKelamin: String
+  jenisPekerjaan: String
+  kecamatanDomisili: String
+  kecamatanKantor: String
+  kecamatanSesuaiID: String
+  kelurahanDomisili: String
+  kelurahanKantor: String
+  kelurahanSesuaiID: String
+  keteranganAgama: String
+  kewarganegaraan: String
+  kodePosDomisili: String
+  kodePosKantor: String
+  kodePosSesuaiID: String
+  kotaDomisili: String
+  kotaKantor: String
+  kotaSesuaiID: String
+  lastModifiedDate: String
+  namaGadisIbuKandung: String
+  namaSesuaiIdentitas: String
+  namaTempatBekerja: String
+  nasabahPrioritas: String
+  negara: String
+  nomorIdentitas: String
+  NPWP: String
+  pendidikanTerakhir: String
+  PEP: String
+  propinsiDomisili: String
+  propinsiKantor: String
+  propinsiSesuaiID: String
+  rtDomisili: String
+  rtKantor: String
+  rtSesuaiID: String
+  rwDomisili: String
+  rwKantor: String
+  rwSesuaiID: String
+  statusPerkawinan: String
+  tanggalLahir: String
+  telepon: String
+  teleponKantor: String
+  tempatLahir: String
+  umur: Int
+}
+
+type InvestasiPortofolio {
+  accountNumber: String
+  balance: Int
+  cifno: String
+  product: String
+  productDescription: String
+  productType: String
+}
+
+type Pinjaman {
+  accountNumber: String
+  balance: Float
+  cifno: String
+  product: String
+  productDescription: String
+  productType: String
+}
+
+type PortofolioPerbankan {
+  cardlink: [Cardlink]
+  investasi: [InvestasiPortofolio]
+  pinjaman: [Pinjaman]
+  simpanan: [Simpanan]
+}
+
+type CustomerProfileAdaptiveChannelOutput {
+  data: [CustomerProfileAdaptiveChannelData]
+  errorCode: String
+  errors: String
+  responseCode: String
+  responseMessage: String
+  statusCode: Int
+}
+
+type Simpanan {
+  accountNumber: String
+  balance: Float
+  cifno: String
+  product: String
+  productDescription: String
+  productType: String
+}
+
+type ResponseWrapper {
+  statusCode: String!
+  errorCode: String!
+  responseCode: String!
+}
+
+type ResponseContext {
+  errorCode: String
+  responseCode: String
+  responseMessage: String
+  acctNo: String
+  acctType: String
+  holdSeq: String
+  holdType: String
+  holdAmt: String
+  holdRemark: String
+  expdate: String
+  holdDate: String
+  recordId: String
+}
+
+type ResponseCardData {
+  status: String
+  responseCode: String
+  responseDesc: String
+  responseData: ResponseCardDataWrapper
+}
+
+type ResponseDataWrapper {
+  cardNo: String
+  branchCode: String
+  typeCode: String
+  cardStatus: String
+  name: String
+  address1: String
+  address2: String
+  city: String
+  province: String
+  postalCode: String
+  countryCode: String
+  phoneNo: String
+  motherName: String
+  employer: String
+  idType: String
+  idNumber: String
+  gender: String
+  maritalStatus: String
+  birthDate: String
+  accNo: String
+  expDate: String
+  mbNo: String
+  mbStatus: String
+  cardType: String
+  type: String
+  issueDate: String
+  activeDate: String
+  lastMaint: String
+  userMaint: String
+  blockDate: String
+  userBlock: String
+  statusDesc: String
+}
+
+type ResponseCardDataWrapper {
+  cardNo: String
+  branchCode: String
+  typeCode: String
+  cardStatus: String
+  name: String
+  address1: String
+  address2: String
+  city: String
+  province: String
+  postalCode: String
+  countryCode: String
+  phoneNo: String
+  motherName: String
+  employer: String
+  idType: String
+  idNumber: String
+  gender: String
+  maritalStatus: String
+  birthDate: String
+  accNo: String
+  expDate: String
+  mbNo: String
+  mbStatus: String
+  cardType: String
+  type: String
+  issueDate: String
+  activeDate: String
+  lastMaint: String
+  userMaint: String
+  blockDate: String
+  userBlock: String
+  statusDesc: String
+}
+
+type ResponseAccountHistory {
+  responseCode: String
+  responseDesc: String
+  responseData: String
+}
+
+type ResponseAccountHistoryDataWrapper {
+  data: [ResponseAccountHistoryData]
+}
+
+type DataAgenBrimola {
+  agenId: String
+  agenName: String
+  agenAlamat: String
+  agenNorek: String
+}
+
+type DataAgen {
+  agenId: String
+  agenName: String
+  agenAlamat: String
+}
+
+type ResponseAgenBrimola {
+  rc: String
+  desc: String
+  data: DataAgen
+}
+
+type ResponseAccountHistoryData {
+  accNo: String
+  activeDate: String
+  blockDate: String
+  branchCode: String
+  cardNo: String
+  cardStatus: String
+  expDate: String
+  issueDate: String
+  lastMaint: String
+  mbNo: String
+  mbStatus: String
+  renewalDate: String
+  typeCode: String
+  userBlock: String
+}
+
+type InquiryHoldStatusResponseWrapper {
+  response: String
+}
+
+type InquiryHoldStatusResponse {
+  errorCode: String!
+  responseCode: String!
+  acctNo: String
+  acctType: String
+  holdSeq: String
+  holdType: String
+  holdAmt: String
+  holdRemark: String
+  expdate: String
+  holdDate: String
+  recordId: String
+  responseMessage: String!
+}
+
+type ResponseAgenPangkalan {
+  rc: String
+  desc: String
+  data: DataPangkalan
+}
+
+type DataPangkalan {
+  agenId: String
+  agenName: String
+  pangkalanId: String
+  pangkalanName: String
+  agenAlamat: String
+  agenNorek: String
+  corpBriva: String
+  corpClientBriva: String
+}
+
+type ResponseAgenBrimolaTrx {
+  rc: String
+  desc: String
+  data: DataTrxBrimola
+}
+
+type DataTrxBrimola {
+  orderId: String
+  jenisPembayaran: String
+  noBriva: String
+  agenName: String
+  pangkalanName: String
+  jumlahTabung: String
+  hargaTabung: String
+  totalHarga: String
+  biayaAdmin: String
+  statusBayar: String
+  tanggalOrder: String
+}
+
+type Cpcus {
+  namaDepan: String
+  namaTengah: String
+  namaBelakang: String
+}
+
+type ResponseCustomerData {
+  customerData: [Cpcus]
+}
+

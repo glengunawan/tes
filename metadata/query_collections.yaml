@@ -1,0 +1,641 @@
+- name: allowed-queries
+  definition:
+    queries:
+      - name: inquiryDataDPLK_byIdNumber
+        query: |
+          query inquiryDataDPLK_byIdNumber ($idNumber: String!) {
+            SI_DPLK(where: {nik:{_eq:$idNumber}}) {
+              alamat_email
+              anggota_korporat_individu
+              cif_dplk
+              iuran
+              jenis_investasi
+              kantor_pembukaan_cabang
+              nama_nasabah
+              no_pegawai_korporat
+              nomor_akun_dplk
+              nomor_handphone
+              pengalihan
+              pengembangan
+              sistem_pembayaran_iuran
+              status_dplk
+              tanggal_lahir
+              tgl_registrasi
+              total_saldo
+              nomor_kartu_dplk
+              nomor_rekening_bri
+              nik
+            }
+            TRX_DPLK(where: {nik:{_eq:$idNumber}}) {
+              branch_code
+              id_transaksi
+              iscommitted
+              keterangan
+              kode_jenis_transaksi
+              nama_nasabah
+              nama_transaksi
+              nomor_handphone
+              tanggal_transaksi
+              nomor_kartu_dplk
+              no_rekening
+              nik
+            }
+          }
+      - name: inquiryDataDPLK_byAccountNumber
+        query: |
+          query inquiryDataDPLK_byAccountNumber ($acctNo: String!) {
+            SI_DPLK(where: {nomor_akun_dplk:{_eq:$acctNo}}) {
+              alamat_email
+              anggota_korporat_individu
+              cif_dplk
+              iuran
+              jenis_investasi
+              kantor_pembukaan_cabang
+              nama_nasabah
+              no_pegawai_korporat
+              nomor_akun_dplk
+              nomor_handphone
+              pengalihan
+              pengembangan
+              sistem_pembayaran_iuran
+              status_dplk
+              tanggal_lahir
+              tgl_registrasi
+              total_saldo
+              nomor_kartu_dplk
+              nomor_rekening_bri
+              nik
+            }
+            TRX_DPLK(where: {no_rekening:{_eq:$acctNo}}) {
+              branch_code
+              id_transaksi
+              iscommitted
+              keterangan
+              kode_jenis_transaksi
+              nama_nasabah
+              nama_transaksi
+              nomor_handphone
+              tanggal_transaksi
+              nomor_kartu_dplk
+              no_rekening
+              nik
+            }
+          }
+      - name: inquiryOAAA
+        query: |
+          query inquiryOAAA ($cardNumber: String!) {
+            CPAHF(where: {AH_ACCT:{_eq:$cardNumber}}) {
+              tanggalTransaksi: AH_EFF_DTE
+              waktuTransaksi: __typename
+              nominalTransaksi: AH_AMNT
+              keteranganTransaksi: __typename
+              approvalCode: __typename
+              tanggalPostingTransaksi: AH_POSTING_DTE
+              kodeTransaksi: AH_TRANS_CODE
+              refferenceNumber: AH_REFERENCE
+              akumulasiJumlahTransaksi: AH_CCA_AMT
+              tanggalPostingTagihan: __typename
+              deskripsiTransaksi: __typename
+              tanggalTransaksiMenggantung: __typename
+              nominalTransaksiMenggantung: __typename
+              waktuSisaPenagihanMerchant: __typename
+              jenisTransaksi: __typename
+            }
+          }
+      - name: inquiryBCCM
+        query: |
+          query inquiryBCCM ($cardNumber: String!) {
+            CPAHF(where: {AH_ACCT:{_eq:$cardNumber}}) {
+              username: __typename
+              securityQuestion: __typename
+              nomorKartuKredit: __typename
+              nomorHandphone: __typename
+              tanggalRegistrasi: __typename
+              jamRegistrasi: __typename
+            }
+          }
+      - name: inquiryMachineData
+        query: |
+          query inquiryMachineData ($tid: String!) {
+            MACHINE_DATA(where: {TID:{_eq:$tid}}) {
+              tid: TID
+              jenisMesin: JENIS_MESIN
+              nomorMesin: NOMOR_MESIN
+              alamatMesin: ALAMAT_MESIN
+              status: STATUS
+              kontakId: KONTAK_ID
+            }
+          }
+      - name: inquiryMachineDataByAddress
+        query: |
+          query inquiryMachineDataByAddress ($alamatMesin: String!) {
+            machineDataByAddress(args: {alamatMesin:$alamatMesin}) {
+              tid
+              jenisMesin: jenis_mesin
+              nomorMesin: nomor_mesin
+              alamatMesin: alamat_mesin
+              status
+              kontakId: kontak_id
+            }
+          }
+      - name: CUSTPERSONAL
+        query: |
+          query CUSTPERSONAL ($idNumber: String!) {
+            CUSTPERSONAL(where: {CU_KTPNO:{_eq:$idNumber}}) {
+              namaNasabahLengkap: CU_FULLNM
+              nik: CU_KTPNO
+              tanggalLahir: CU_BORNDATE
+              nomorAplikasiPengajuan: CU_REF
+              tanggalPengajuan: __typename
+              channelPengajuan: __typename
+              nomorKartuKredit: __typename
+              progressPengajuan: __typename
+            }
+          }
+      - name: inquiryMerchantProfileByMID
+        query: |
+          query inquiryMerchantProfileByMID ($mid: String!) {
+            MERCHANT_PROFILE(where: {mid:{_eq:$mid}}) {
+              tid
+              mid
+              alamat_merchant
+              channel_merchant
+              code_reffnum
+              data_promo
+              detail
+              detail_edc
+              email
+              jenis_merchant
+              jenis_usaha_merchant
+              kantor_wilayah
+              kanwil
+              kode_unit_kerja
+              mcc_master
+              mcc_npg
+              mcc_visa
+              mdr_debit_npg
+              mdr_debit_pl
+              mdr_mastercard
+              mdr_offus
+              mdr_onus
+              mdr_unik
+              modifikasi_oleh
+              nama_merchant_edc
+              nama_merchant_qris
+              nama_pic_unit_kerja
+              no_batch
+              nomor_rekening_penampungan
+              nomor_telepon_merchant
+              perangkat
+              pic_merchant
+              pn_pic_unit_kerja
+              rc
+              regional_office_pengelola
+              status_pemasangan
+              status_ticket
+              tanggal_dibuat
+              tanggal_modifikasi_terakhir
+              tanggal_pasang
+              tanggal_update_data
+              telpon
+              tipe
+              tipe_merchant
+              user_pemrakarsa
+              vendor_pemasang
+            }
+          }
+      - name: inquiryMerchantProfileByTID
+        query: |
+          query inquiryMerchantProfileByTID ($tid: String!) {
+            MERCHANT_PROFILE(where: {tid:{_eq:$tid}}) {
+              tid
+              mid
+              alamat_merchant
+              channel_merchant
+              code_reffnum
+              data_promo
+              detail
+              detail_edc
+              email
+              jenis_merchant
+              jenis_usaha_merchant
+              kantor_wilayah
+              kanwil
+              kode_unit_kerja
+              mcc_master
+              mcc_npg
+              mcc_visa
+              mdr_debit_npg
+              mdr_debit_pl
+              mdr_mastercard
+              mdr_offus
+              mdr_onus
+              mdr_unik
+              modifikasi_oleh
+              nama_merchant_edc
+              nama_merchant_qris
+              nama_pic_unit_kerja
+              no_batch
+              nomor_rekening_penampungan
+              nomor_telepon_merchant
+              perangkat
+              pic_merchant
+              pn_pic_unit_kerja
+              rc
+              regional_office_pengelola
+              status_pemasangan
+              status_ticket
+              tanggal_dibuat
+              tanggal_modifikasi_terakhir
+              tanggal_pasang
+              tanggal_update_data
+              telpon
+              tipe
+              tipe_merchant
+              user_pemrakarsa
+              vendor_pemasang
+            }
+          }
+      - name: inquiryCardlink
+        query: |
+          query InqueryCardLink ($cardNumber: String!) {
+            CPCRD(where: {CM_CARD_NMBR:{_eq:$cardNumber}}) {
+              namaIndividu: CM_SHORT_NAME
+              limitKartuKredit: CM_CRLIMIT
+              expiredKartu: CM_CARD_EXPIR_DTE
+              tanggalCetak: CM_DTE_OPENED
+              tanggalJatuhTempo: CM_CRLIMIT_TEMP_EXP_DTE
+              nominalFullPayment: __typename
+              nominalMinimalPayment: __typename
+              nominalTagihanBerjalan: __typename
+              nominalPembayaranTerakhir: __typename
+              tanggalPembayaranTerakhir: __typename
+              cycleTagihanPerBulan: __typename
+              tagihanBulanLalu: __typename
+              pembayaranTagihanBulanLalu: __typename
+              totalTagihanBulanIni: __typename
+              nominalTransaksiTarikTunai: __typename
+              bungaTagihan: __typename
+              tagihanTercetakBulanIni: __typename
+              minimumPembayaran: __typename
+              sisaLimitTercetak: __typename
+              jumlahTanggalBulanTercetak: __typename
+              JOIN {
+                tanggalLahir: CR_DTE_BIRTH
+                nomorHandphone: __typename
+                nomorTelpKantor: CR_OFFICE_PHONE
+                nomorTelpRumah: CR_CO_HOME_PHONE
+                nomorTelpKerabatTidakSerumah: __typename
+                namaKerabatTidakSerumah: __typename
+                nik: CR_CO_EMPLOYER
+                npwp: CR_TAX_ID_NMBR
+                sisaLimit: __typename
+                limitTarikTunai: __typename
+                sisaLimitTarikTunai: __typename
+                limitCicilan: __typename
+                jenisKelamin: CR_EU_SEX
+                jabatan: __typename
+                alamatBilling: __typename
+                alamatKartu: __typename
+                alamatKantor: __typename
+                alamatRumah: __typename
+                email: __typename
+                nominalGaji: __typename
+                namaLengkapIbuKandung: __typename
+                custNumber: __typename
+                alasanBlokir: __typename
+                tanggalMaintenance: __typename
+                nomorRekeningAutoDebet: __typename
+                fixPayment: __typename
+                metodePembayaran: __typename
+                kodeBank: __typename
+                namaCetakKartu: __typename
+                perubahanAlamatRumah: __typename
+                perubahanKodePos: __typename
+                perubahanKota: __typename
+                perubahanNpwp: __typename
+                perubahanKtp: __typename
+                perubahanAlamatRumah: __typename
+                perubahanAlamatKantor: __typename
+                perubahanAlamatPengirimanKartu: __typename
+                perubahanEmail: __typename
+                namaLengkapIbuKandung: __typename
+                nominalPendapatanPerBulan: __typename
+              }
+            }
+          }
+      - name: inquiryCardData
+        query: |
+          query inquiryCardData ($cardNo: String!) {
+            chmGraphql {
+              inquiryCardData(request: {cardNo:$cardNo}) {
+                responseCode
+                responseDesc
+                status
+                data: responseData {
+                  accNo
+                  cardNo
+                  type
+                  name
+                  activeDate
+                  expDate
+                  issueDate
+                  cardStatus
+                  lastMaint
+                  userMaint
+                  statusDesc
+                  blockDate
+                  userBlock
+                  historyAccount {
+                    responseData
+                  }
+                }
+              }
+            }
+          }
+      - name: inquiryBrilinkProfileByTID
+        query: |
+          query inquiryBrilinkProfileByTID ($tid: String!) {
+            BRILINK_PROFILE(where: {TID:{_eq:$tid}}) {
+              TID
+              jenis_jaringan
+              alamat_agen
+              jenis_usaha
+              kode_agen
+              kode_channel
+              kode_merchant
+              kode_uker_pengelola
+              limit_transaksi
+              mid
+              modifikasi_oleh
+              nama_agen
+              nama_ibu_kandung
+              nama_lengkap
+              nama_merchant
+              nomor_kartu_debit
+              nomor_kontak_pab
+              nomor_ktp
+              nomor_rekening
+              nomor_rekening_pelimpahan
+              nomor_rekening_pinjaman
+              nomor_siup
+              pic_uker
+              region_office_pengelola
+              sharing_fee
+              status
+              tanggal_dibuat
+              tanggal_lahir
+              tanggal_modifikasi
+              telepon
+            }
+          }
+      - name: inquiryBrilinkProfileByMID
+        query: |
+          query inquiryBrilinkProfileByMID ($mid: String!) {
+            BRILINK_PROFILE(where: {mid:{_eq:$mid}}) {
+              TID
+              jenis_jaringan
+              alamat_agen
+              jenis_usaha
+              kode_agen
+              kode_channel
+              kode_merchant
+              kode_uker_pengelola
+              limit_transaksi
+              mid
+              modifikasi_oleh
+              nama_agen
+              nama_ibu_kandung
+              nama_lengkap
+              nama_merchant
+              nomor_kartu_debit
+              nomor_kontak_pab
+              nomor_ktp
+              nomor_rekening
+              nomor_rekening_pelimpahan
+              nomor_rekening_pinjaman
+              nomor_siup
+              pic_uker
+              region_office_pengelola
+              sharing_fee
+              status
+              tanggal_dibuat
+              tanggal_lahir
+              tanggal_modifikasi
+              telepon
+            }
+          }
+      - name: inquiryDomainBrimola
+        query: |
+          query inquiryDomainBrimola ($idPangkalan: String!, $startDate: String!, $endDate: String!) {
+            chmGraphql {
+              inquiryBrimolaPangkalan(keagenanInput: {pangkalanId:$idPangkalan}) {
+                rc
+                desc
+                data {
+                  agenAlamat
+                  agenId
+                  agenName
+                  agenNorek
+                  corpBriva
+                  corpClientBriva
+                  pangkalanName
+                  pangkalanId
+                  BrilinkTrxByIdKeagenan(agenInputTrx: {pangkalanId:$idPangkalan,startDate:$startDate,endDate:$endDate}) {
+                    data {
+                      agenName
+                      biayaAdmin
+                      hargaTabung
+                      jenisPembayaran
+                      jumlahTabung
+                      noBriva
+                      orderId
+                      pangkalanName
+                      statusBayar
+                      tanggalOrder
+                      totalHarga
+                    }
+                  }
+                }
+              }
+            }
+          }
+      - name: inquiryCIFBrimola
+        query: |
+          query MyQuery ($idPangkalan: String!) {
+            inquiryBrimolaPangkalan(keagenanInput: {pangkalanId:$idPangkalan}) {
+              desc
+              rc
+              data {
+                agenAlamat
+                agenId
+                agenName
+                agenNorek
+                corpBriva
+                corpClientBriva
+                pangkalanId
+                pangkalanName
+              }
+            }
+          }
+      - name: inquiryHoldStatus
+        query: |
+          query MyQuery ($acctNo: String, $channelId: String, $externalId: String, $holdSeq: String, $serviceId: String, $tellerId: String) {
+            inquiryHoldStatus(request: {acctNo:$acctNo,holdSeq:$holdSeq,externalId:$externalId,serviceId:$serviceId,tellerId:$tellerId,channelId:$channelId}) {
+              errorCode
+              responseCode
+              responseMessage
+              holdAmt
+              holdRemark
+              holdType
+              holdDate
+            }
+          }
+      - name: inquiryPCTD
+        query: |
+          query inquiryPCTD ($cardNumber: String!) {
+            CPAHF(where: {AH_ACCT:{_eq:$cardNumber}}) {
+              detailTransaksi: AH_DESC
+              tanggalTransaksi: AH_EFF_DTE
+              nominalTransaksi: AH_AMNT
+              tanggalPostingTransaksi: AH_POSTING_DTE
+              kodeTransaksi: AH_TRANS_CODE
+              refferenceNumber: AH_REFERENCE
+              approvalCode: AH_AUTH_CODE
+            }
+          }
+      - name: inquiryCardlinkByPhoneNumber
+        query: |
+          query inquiryCardlinkByPhoneNumber ($phoneNumber: String!) {
+            response: chmGraphql {
+              customerData: CPCUS(where: {CR_CO_HOME_PHONE:{_eq:$phoneNumber}}) {
+                namaDepan: CR_NAME_1
+                namaTengah: CR_NAME_2
+                namaBelakang: CR_NAME_3
+                nomorHandphoneTerdaftar: CR_CO_HOME_PHONE
+                nomorTelephoneKerabatTidakSerumah: CR_CO_OFFICE_PHONE
+                nomorTelephoneRumah: CR_HOME_PHONE
+                nomorTelephoneKantor: CR_OFFICE_PHONE
+                namaKerabatTidakSerumah: CR_CO_OWNER
+                nomorNik: CR_CO_EMPLOYER
+                nomorNpwp: CR_TAX_ID_NMBR
+                sisaLimitNasabah: CR_AVAIL_CREDIT
+                limitTarikTunaiNasabah: CR_CASH_LINE
+                sisaLimitTarikTunaiNasabah: CR_AVAIL_CASH
+                limitCicilanNasabah: CR_INSTL_LINE
+                sisaLimitCicilanNasabah: CR_AVAIL_INSTL
+                jenisKelamin: CR_EU_SEX
+                jabatanKerja: CR_EU_OCCPN_CODE
+                alamatKantorDepan: CR_ADDL_ADDR_1
+                alamatKantorTengah: CR_ADDL_ADDR_2
+                alamatKantorBelakang: CR_ADDL_ADDR_3
+                alamatRumahDepan: CR_ADDR_1
+                alamatRumahBelakang: CR_ADDR_2
+                alamatEmail: CR_ADDL_EMAIL
+                cardHolderData: cardHolderDataByAcctNumber {
+                  limitKartuKredit: CM_CRLIMIT
+                  expiredKartu: CM_CARD_EXPIR_DTE
+                  tanggalCetakCycle: CM_CYCLE
+                  tanggalJatuhTempo: CM_GRACE_DAYS
+                  sisaLimitKartu: CM_AVAIL_CREDIT
+                  limitTarikTunaiKartu: CM_CSH_ADV_LIM
+                  sisaLimitTarikTunaiKartu: CM_CSH_ADV_AVAIL
+                  limitCicilanKartu: CM_INSTL_LIMIT
+                  sisaLimitCicilanKartu: CM_AVAIL_INSTL
+                  customerNumber: CM_CUSTOMER_NMBR
+                  tanggalTerakhirMaintenanceKartu: CM_DTE_LST_MAINT
+                  namaCetakKartu: CM_EMBOSSER_NAME_1
+                }
+                additionalData: additionalDataByAcctNumber {
+                  namaLengkapIbuKandung: CRA_MOTHER
+                  nominalPendapatanPerBulan: CRA_INCOME
+                }
+                portofolio: portofolioByPhoneNumber {
+                  saving {
+                    cifno
+                    acctno
+                    product
+                    productType
+                    productDescription
+                    balance
+                    status
+                  }
+                  loan {
+                    cifno
+                    acctno
+                    product
+                    productType
+                    productDescription
+                    balance
+                    status
+                  }
+                  investasi {
+                    cifno
+                    acctno
+                    product
+                    productType
+                    productDescription
+                    balance: amount
+                    status
+                  }
+                  creditCard {
+                    cifno
+                    cardNumber
+                    product
+                    productType
+                    productDescription
+                    status
+                  }
+                }
+              }
+            }
+          }
+      - name: inquiryCardlinkByCardNumber
+        query: |
+          query inquiryCardlinkByCardNumber ($cardNo: String!) {
+            response: chmGraphql {
+              customerData: CPCUS(where: {CR_ACCT_NBR:{_eq:$cardNo}}) {
+                namaDepan: CR_NAME_1
+                namaTengah: CR_NAME_2
+                namaBelakang: CR_NAME_3
+                nomorHandphoneTerdaftar: CR_CO_HOME_PHONE
+                nomorTelephoneKerabatTidakSerumah: CR_CO_OFFICE_PHONE
+                nomorTelephoneRumah: CR_HOME_PHONE
+                nomorTelephoneKantor: CR_OFFICE_PHONE
+                namaKerabatTidakSerumah: CR_CO_OWNER
+                nomorNik: CR_CO_EMPLOYER
+                nomorNpwp: CR_TAX_ID_NMBR
+                sisaLimitNasabah: CR_AVAIL_CREDIT
+                limitTarikTunaiNasabah: CR_CASH_LINE
+                sisaLimitTarikTunaiNasabah: CR_AVAIL_CASH
+                limitCicilanNasabah: CR_INSTL_LINE
+                sisaLimitCicilanNasabah: CR_AVAIL_INSTL
+                jenisKelamin: CR_EU_SEX
+                jabatanKerja: CR_EU_OCCPN_CODE
+                alamatKantorDepan: CR_ADDL_ADDR_1
+                alamatKantorTengah: CR_ADDL_ADDR_2
+                alamatKantorBelakang: CR_ADDL_ADDR_3
+                alamatRumahDepan: CR_ADDR_1
+                alamatRumahBelakang: CR_ADDR_2
+                alamatEmail: CR_ADDL_EMAIL
+                cardHolderData: cardHolderDataByAcctNumber {
+                  limitKartuKredit: CM_CRLIMIT
+                  expiredKartu: CM_CARD_EXPIR_DTE
+                  tanggalCetakCycle: CM_CYCLE
+                  tanggalJatuhTempo: CM_GRACE_DAYS
+                  sisaLimitKartu: CM_AVAIL_CREDIT
+                  limitTarikTunaiKartu: CM_CSH_ADV_LIM
+                  sisaLimitTarikTunaiKartu: CM_CSH_ADV_AVAIL
+                  limitCicilanKartu: CM_INSTL_LIMIT
+                  sisaLimitCicilanKartu: CM_AVAIL_INSTL
+                  customerNumber: CM_CUSTOMER_NMBR
+                  tanggalTerakhirMaintenanceKartu: CM_DTE_LST_MAINT
+                  namaCetakKartu: CM_EMBOSSER_NAME_1
+                }
+                additionalDataByAcctNumber {
+                  namaLengkapIbuKandung: CRA_MOTHER
+                  nominalPendapatanPerBulan: CRA_INCOME
+                }
+              }
+            }
+          }

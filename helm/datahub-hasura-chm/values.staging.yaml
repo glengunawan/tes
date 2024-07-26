@@ -1,0 +1,187 @@
+# Default values for datahub-hasura-chm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: "stable"
+  namespace: "customer-hub"
+imagePullSecrets: 
+  - name: gcr
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/canary: "false"
+    nginx.ingress.kubernetes.io/canary-weight: "10"
+
+  hosts:
+    - host: staging.datahub.bri.co.id
+      paths:
+        - path: /api/v1/hasura-chm/(.*|$)
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+
+env: 
+
+  # Hasura Main Configs 
+  - name: HASURA_GRAPHQL_METADATA_DATABASE_URL
+    value: 'postgres://bda_dhub_view:bdaP%40ssw0rd512@172.18.140.108:5432/hasura_chm'
+  - name: HASURA_GRAPHQL_ADMIN_SECRET
+    value: "P@ssw0rd"
+  - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+    value: "y"
+  - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES                 
+    value: "startup, http-log, webhook-log, websocket-log, query-log"
+  - name: HASURA_GRAPHQL_CONSOLE_ASSETS_DIR                 
+    value: "/srv/console-assets"
+  - name: HASURA_GRAPHQL_EE_LICENSE_KEY                 
+    value: eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJIYXN1cmEiLCJzdWIiOiJnZWRlLmt1a3VoQGNvcnAuYnJpLmNvLmlkIiwiZXhwIjoxODE2NDczNjAwLCJpYXQiOjE3MjEwMDczMDYsImp0aSI6IjYxYTFiZmUxLTI5ZTUtNGNmZC04YWYwLTMzN2I5Yjk2MjJiOCIsImxpY2Vuc2VfZXhwX2F0IjoxODE2NDczNjAwLCJncmFjZV9leHBfYXQiOjE4MTY0NzM2MDAsImxpY2Vuc2VfdHlwZSI6InBhaWQifQ.XJ5tptyLet6LJ46UpjQxyBBi4xxwQUqHtFcyTwpGa38k-L9bmpBgGlY3nnhX86buWqrwYDJkQSYOGWHABuLBk9LzrJ5O9Jsq2099XwWSh6OB_PTSWe8oQUzrHkj5y4Ai7_ffZ6hbmMwrsJDOcO79kDv1oGd0rcZZb7us2xnj-VkMoMQ1X-37LbqQyEB7bJWxomvBIOKFpOSf7vb8Vkf07fSqGpNa8NXHUJMnMj8yh0zpf0D-aZJ7mO_-YDT1MHop-g12bmZ-QyiOor0PxO6jLAJmGvOv906hPg3YV2lt_5grhwmMXV6d7Isj3V9t_LdHUuB66NKtUmmkChFdbW6zeR_y6dLZfmLjM5NNaDcoZkZ1_YhlzuvWlHHkFPZ2vDtd1kCoNuF36QlBBuMnRPlL6s0zk1RjyEY9AY9afufWV0bJoW4UP0CU6axvaQPfeFgFS-BkEbMyI4xLh4JKDdAcSoLgUcpRqc__9PgqnfYqoJ2MqxXYhf0ATP0Y6SZsq2Co
+  - name: HASURA_GRAPHQL_ENABLED_APIS                 
+    value: "metadata,graphql,config,metrics"
+  - name: HASURA_GRAPHQL_METRICS_SECRET                 
+    value: "hasura_metrics_secret"
+  - name: HASURA_GRAPHQL_JWT_SECRET
+    value: '{"type":"HS256", "key":"a7a8dfb96ba627d4136145aec605b2b1cf508a40488cd0be4f6a56657f762bbc"}'
+  - name: HASURA_GRAPHQL_METADATA_DIR
+    value: '/app/metadata'
+  - name: HASURA_GRAPHQL_MIGRATIONS_SERVER_TIMEOUT
+    value: '120'
+  
+  # Databases
+  - name: HASURA_APP_SQLSERVER_LOSBRICC_URL                 
+    value: 'Driver={ODBC Driver 17 for SQL Server};Server=tcp:172.18.141.253,1433;Database=LOSBRICC;Uid=sa;Pwd=P@ssw0rd'
+  - name: HASURA_DATAHUB_1800_CARDLINK_URL
+    value: 'Driver={ODBC Driver 17 for SQL Server};Server=172.18.76.102,1433;Database=1800_CARDLINK;Uid=bda_dbo;Pwd=bdaP@ssw0rddbo971'
+  - name: HASURA_DATAHUB_POSTGRESQL_CHM_URL
+    value: 'postgres://bda_dhub_view:bdaP%40ssw0rd512@172.18.140.108:5432/chm'
+  - name: HASURA_DATAHUB_SQLSERVER_CHM_URL
+    value: 'Driver={ODBC Driver 17 for SQL Server};Server=172.18.76.102,1433;Database=CHM;Uid=bda_dbo;Pwd=bdaP@ssw0rddbo971'
+  
+  # OTLES
+  - name: HASURA_OTEL_TRACES_ENDPOINT
+    value: 'http://172.18.53.72:4318/v1/traces'
+  - name: HASURA_OTEL_METRICS_ENDPOINT
+    value: 'http://172.18.53.72:4318/v1/metrics'
+  - name: HASURA_OTEL_LOGS_ENDPOINT
+    value: 'http://172.18.53.72:4318/v1/logs'
+  - name: HASURA_DEPLOYMENT_ENVIRONMENT
+    value: 'staging'
+
+    # Remote Schemas
+  - name: HASURA_REMOTE_SCHEMA_CHM
+    value: 'http://datahub-hasura-chm.customer-hub.svc.cluster.local/v1/graphql'
+  - name: HASURA_REMOTE_SCHEMA_DEMOGRAPHY
+    value: 'http://datahub-ms-customer-demography-graphql-os.customer-hub.svc.cluster.local/graphql'
+  - name: HASURA_REMOTE_SCHEMA_PORTOFOLIO
+    value: 'http://datahub-ms-customer-portofolio-graphql-bm.customer-hub.svc.cluster.local/graphql'
+    
+  # Hasura Actions
+  - name: HASURA_ACTION_INQUIRY_ACCOUNT_HISTORY_WEBHOOK
+    value: 'http://camsservice.bri.co.id'
+  - name: HASURA_ACTION_INQUIRY_ACCOUNT_HISTORY_HEADER_X_CHANNEL_ID
+    value: 'EDM'
+  - name: HASURA_ACTION_INQUIRY_ACCOUNT_HISTORY_HEADER_X_API_KEY
+    value: 'ESB'
+
+  - name: HASURA_ACTION_INQUIRY_CARD_DATA_WEBHOOK
+    value: 'http://camsservice.bri.co.id'
+  - name: HASURA_ACTION_INQUIRY_CARD_DATA_HEADER_X_CHANNEL_ID
+    value: 'EDM'
+  - name: HASURA_ACTION_INQUIRY_CARD_DATA_HEADER_X_API_KEY
+    value: 'ESB'
+
+  - name: HASURA_ACTION_INQUIRY_BRIMOLA_PANGKALAN_WEBHOOK
+    value: 'https://brimola.bri.co.id/brimola/partners/api/BrimolaInfo/getDataPangkalan'
+  - name: HASURA_ACTION_INQUIRY_BRIMOLA_PANGKALAN_APP_KEY
+    value: '1a4af4a2c4e12c6e1720afd8e24433dd5454a4c125d08c58d0d80ceb2247c6050d35775bbb8a7b52f68926b3977b11f85113ce01c4391b308029fbc8f686287e'
+
+  - name: HASURA_ACTION_INQUIRY_BRIMOLA_TRANSACTION_WEBHOOK
+    value: 'https://brimola.bri.co.id/brimola/partners/api/BrimolaInfo/getListTransaction'
+  - name: HASURA_ACTION_INQUIRY_BRIMOLA_TRANSACTION_APP_KEY
+    value: '1a4af4a2c4e12c6e1720afd8e24433dd5454a4c125d08c58d0d80ceb2247c6050d35775bbb8a7b52f68926b3977b11f85113ce01c4391b308029fbc8f686287e'
+
+  - name: HASURA_ACTION_INQUIRY_HOLD_STATUS_WEBHOOK
+    value: 'https://apiesb.bri.co.id/gateway/casaretrieve/1.0/mscasaretrieveinformation'
+  - name: HASURA_ACTION_INQUIRY_HOLD_STATUS_AUTHORIZATION
+    value: 'Basic ZWRtOmVkbVBAc3N3MHJk'
+  
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

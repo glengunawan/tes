@@ -1,0 +1,93 @@
+- name: chm-graphql
+  definition:
+    url_from_env: HASURA_REMOTE_SCHEMA_CHM
+    timeout_seconds: 60
+    customization:
+      root_fields_namespace: chmGraphql
+      type_names:
+        mapping: {}
+        prefix: chmGraphql
+    headers:
+      - name: content-type
+        value: application/json
+      - name: x-hasura-admin-secret
+        value: P@ssw0rd
+  comment: chm-graphql
+  remote_relationships:
+    - relationships:
+        - definition:
+            to_remote_schema:
+              lhs_fields:
+                - accNo
+              remote_field:
+                inquiryAccountHistory:
+                  arguments:
+                    request:
+                      acctNo: $accNo
+              remote_schema: chm-graphql
+          name: historyAccount
+      type_name: ResponseCardDataWrapper
+    - relationships:
+        - definition:
+            to_remote_schema:
+              lhs_fields:
+                - CR_ACCT_NBR
+              remote_field:
+                CPCRD:
+                  arguments:
+                    where:
+                      CM_CUSTOMER_NMBR:
+                        _eq: $CR_ACCT_NBR
+              remote_schema: chm-graphql
+          name: cardHolderDataByAcctNumber
+        - definition:
+            to_remote_schema:
+              lhs_fields:
+                - CR_ACCT_NBR
+              remote_field:
+                CPCRA:
+                  arguments:
+                    where:
+                      CRA_CUST_NBR:
+                        _eq: $CR_ACCT_NBR
+              remote_schema: chm-graphql
+          name: additionalDataByAcctNumber
+        - definition:
+            to_remote_schema:
+              lhs_fields:
+                - CR_CO_HOME_PHONE
+              remote_field:
+                portofolioByPhoneNumber:
+                  arguments:
+                    phoneNumber: $CR_CO_HOME_PHONE
+              remote_schema: portofolio-graphql
+          name: portofolioByPhoneNumber
+      type_name: CPCUS
+    - relationships:
+        - definition:
+            to_remote_schema:
+              lhs_fields:
+                - agenId
+              remote_field:
+                inquiryBrimolaTransaction:
+                  arguments:
+                    agenInputTrx:
+                      agenId: $agenId
+              remote_schema: chm-graphql
+          name: BrilinkTrxByIdKeagenan
+      type_name: DataPangkalan
+- name: demography-graphql
+  definition:
+    url_from_env: HASURA_REMOTE_SCHEMA_DEMOGRAPHY
+    timeout_seconds: 60
+    customization:
+      type_names:
+        mapping:
+          Filter: FilterDemography
+  comment: Datahub's Demography GraphQL Service
+- name: portofolio-graphql
+  definition:
+    url_from_env: HASURA_REMOTE_SCHEMA_PORTOFOLIO
+    timeout_seconds: 60
+    customization: {}
+  comment: Datahub's Portofolio GraphQL Service

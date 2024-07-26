@@ -1,0 +1,13 @@
+table:
+  name: CPCRA
+  schema: dbo
+configuration:
+  column_config:
+    CRA_SUPCRD_ADDR_TYPEc PIC:
+      custom_name: CRA_SUPCRD_ADDR_TYPEc_PIC
+    'CRA_SUPCRD_IC_PPa ':
+      custom_name: CRA_SUPCRD_IC_PPa_
+  custom_column_names:
+    CRA_SUPCRD_ADDR_TYPEc PIC: CRA_SUPCRD_ADDR_TYPEc_PIC
+    'CRA_SUPCRD_IC_PPa ': CRA_SUPCRD_IC_PPa_
+  custom_root_fields: {}

@@ -1,0 +1,5 @@
+tls_allowlist:
+  - host: api.close.dev.bri.co.id
+    permissions:
+      - self-signed
+    suffix: "5556"

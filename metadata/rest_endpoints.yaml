@@ -1,0 +1,171 @@
+- comment: Inquiry SI DPLK dan TRX DPLK menggunakan Account Number
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryDataDPLK_byAccountNumber
+  methods:
+    - POST
+  name: inquiryDataDPLK_byAccountNumber
+  url: InquiryDataDPLK_byAccountNumber
+- comment: Inquiry SI DPLK dan TRX DPLK menggunakan IdNumber (NIK)
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryDataDPLK_byIdNumber
+  methods:
+    - POST
+  name: inquiryDataDPLK_byIdNumber
+  url: InquiryDataDPLK_byIdNumber
+- comment: CD-05
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryBCCM
+  methods:
+    - POST
+  name: inquiryBCCM
+  url: bccm
+- comment: inquiryCardlink
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryCardlink
+  methods:
+    - POST
+  name: inquiryCardlink
+  url: cardlink
+- comment: '[LOSBRICC] - CUSTPERSONAL'
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: CUSTPERSONAL
+  methods:
+    - POST
+  name: CUSTPERSONAL
+  url: custpersonal
+- comment: ""
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryHoldStatus
+  methods:
+    - POST
+  name: inquiryHoldStatus
+  url: inquiry-hold-status
+- comment: BRILink Profile by MID
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryBrilinkProfileByMID
+  methods:
+    - POST
+  name: inquiryBrilinkProfileByMID
+  url: inquiryBrilinkProfileByMID
+- comment: BRILink Profile by TID
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryBrilinkProfileByTID
+  methods:
+    - POST
+  name: inquiryBrilinkProfileByTID
+  url: inquiryBrilinkProfileByTID
+- comment: ""
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryCIFBrimola
+  methods:
+    - POST
+  name: inquiryCIFBrimola
+  url: inquiryBrimolaByIdPangkalan
+- comment: inquiryCardData
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryCardData
+  methods:
+    - POST
+  name: inquiryCardData
+  url: inquiryCardData
+- comment: DB02_inquiry cardlink by card number
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryCardlinkByCardNumber
+  methods:
+    - POST
+  name: inquiryCardlinkByCardNumber
+  url: inquiryCardlinkByCardNumber
+- comment: DB04 - inquiry cardlink by phone number
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryCardlinkByPhoneNumber
+  methods:
+    - POST
+  name: inquiryCardlinkByPhoneNumber
+  url: inquiryCardlinkByPhoneNumber
+- comment: Inquiry Brimola, data Keagenan dan Trx
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryDomainBrimola
+  methods:
+    - POST
+  name: inquiryDomainBrimola
+  url: inquiryDomainBrimola
+- comment: Similarity address machine data
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryMachineDataByAddress
+  methods:
+    - POST
+  name: inquiryMachineDataByAddress
+  url: inquiryMachineDataByAddress
+- comment: Merchant profile by MID
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryMerchantProfileByMID
+  methods:
+    - POST
+  name: inquiryMerchantProfileByMID
+  url: inquiryMerchantProfileByMID
+- comment: Merchant profile by TID
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryMerchantProfileByTID
+  methods:
+    - POST
+  name: inquiryMerchantProfileByTID
+  url: inquiryMerchantProfileByTID
+- comment: AP-05
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryMachineData
+  methods:
+    - POST
+  name: inquiryMachineData
+  url: machineDataByTid
+- comment: CD-01
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryOAAA
+  methods:
+    - POST
+  name: inquiryOAAA
+  url: oaaa
+- comment: CD-02
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: inquiryPCTD
+  methods:
+    - POST
+  name: inquiryPCTD
+  url: pctd

@@ -1,0 +1,3 @@
+table:
+  name: machine_data
+  schema: public

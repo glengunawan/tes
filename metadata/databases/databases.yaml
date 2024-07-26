@@ -1,0 +1,78 @@
+- name: APP_SQLSERVER_LOSBRICC
+  kind: mssql
+  configuration:
+    connection_info:
+      connection_string:
+        from_env: HASURA_APP_SQLSERVER_LOSBRICC_URL
+      isolation_level: read-committed
+      pool_settings:
+        idle_timeout: 5
+        max_connections: 50
+  tables: "!include APP_SQLSERVER_LOSBRICC/tables/tables.yaml"
+- name: DATAHUB_1800_CARDLINK
+  kind: mssql
+  configuration:
+    connection_info:
+      connection_string:
+        from_env: HASURA_DATAHUB_1800_CARDLINK_URL
+      isolation_level: read-committed
+      pool_settings:
+        idle_timeout: 5
+        max_connections: 50
+  tables: "!include DATAHUB_1800_CARDLINK/tables/tables.yaml"
+- name: DATAHUB_POSTGRESQL_CHM
+  kind: postgres
+  configuration:
+    connection_info:
+      database_url:
+        from_env: HASURA_DATAHUB_POSTGRESQL_CHM_URL
+      isolation_level: read-committed
+      use_prepared_statements: false
+  logical_models:
+    - fields:
+        - name: tid
+          type:
+            nullable: false
+            scalar: varchar
+        - name: jenis_mesin
+          type:
+            nullable: true
+            scalar: varchar
+        - name: nomor_mesin
+          type:
+            nullable: true
+            scalar: varchar
+        - name: alamat_mesin
+          type:
+            nullable: true
+            scalar: varchar
+        - name: status
+          type:
+            nullable: true
+            scalar: varchar
+        - name: kontak_id
+          type:
+            nullable: true
+            scalar: varchar
+      name: modelMachineData
+  native_queries:
+    - arguments:
+        alamatMesin:
+          description: Alamat Mesin
+          nullable: false
+          type: varchar
+      code: "SELECT\r\n\t\ttid,\r\n\t\tjenis_mesin,\r\n\t\tnomor_mesin,\r\n\t\talamat_mesin,\r\n\t\tstatus,\r\n\t\tkontak_id\r\nFROM (\r\n\t\tSELECT DISTINCT\r\n\t\t\t\ttid,\r\n\t\t\t\tjenis_mesin,\r\n        \t\tnomor_mesin,\r\n        \t\talamat_mesin,\r\n        \t\tstatus,\r\n        \t\tkontak_id,\r\n\t\t\t\tsimilarity(lower(alamat_mesin), lower('%' || {{alamatMesin}} || '%')) as score\r\n\t\tFROM\r\n\t\t\t\tmachine_data\r\n\t\tWHERE\r\n\t\t\t\tlower(alamat_mesin) like lower('%' || {{alamatMesin}} || '%')\r\n) AS subquery\r\nORDER BY\r\n\t\tscore DESC\r\nLIMIT 20;"
+      returns: modelMachineData
+      root_field_name: machineDataByAddress
+  tables: "!include DATAHUB_POSTGRESQL_CHM/tables/tables.yaml"
+- name: DATAHUB_SQLSERVER_CHM
+  kind: mssql
+  configuration:
+    connection_info:
+      connection_string:
+        from_env: HASURA_DATAHUB_SQLSERVER_CHM_URL
+      isolation_level: read-committed
+      pool_settings:
+        idle_timeout: 5
+        max_connections: 50
+  tables: "!include DATAHUB_SQLSERVER_CHM/tables/tables.yaml"
